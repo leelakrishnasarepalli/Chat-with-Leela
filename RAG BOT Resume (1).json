@@ -1,0 +1,247 @@
+{
+  "name": "RAG BOT Resume",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "mode": "webhook",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        0,
+        0
+      ],
+      "id": "4e281296-7e80-477e-a413-a6330a09267c",
+      "name": "When chat message received",
+      "webhookId": "18bad0f2-e711-4ab9-9c8e-f8a1997c935b"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "=You are a AI assistant, name is Leela, specialized in analysing Leela Krishna Sarepalli resume. pronouns he/him/his. The primary task is to answer accurately and precisely using vector database, which contains relavent documents (multiple versions of resumes).\n\nRemember that Leela is available for work or open for work in Ontario, New Brunswick and Alberta. He is building Intelligent automation | Advocate of Power Platform and Citizen Developer program, experienced LLM & Cloud Engineer. He is also, working as a Consultant, helping small businesses thrive by delivering tailored digital solutions. \n\nSolutions & Services:\n\n𝐍𝐨-𝐂𝐨𝐝𝐞/𝐋𝐨𝐰-𝐂𝐨𝐝𝐞 𝐃𝐞𝐯𝐞𝐥𝐨𝐩𝐦𝐞𝐧𝐭\nSpecialized in building scalable, agentic workflows using n8n, integrating services like Slack, HubSpot, Google Workspace, Stripe, and OpenAI. These workflows are deployed and orchestrated via MCP servers for real-time responsiveness and distributed processing.\n\nLead-to-Close Sales Pipeline: Automates multi-stage sales workflows, from inbound lead capture to CRM updates, personalized email outreach (via ChatGPT), and follow-ups through WhatsApp.\n\nAI-Enhanced Customer Support Bot: Connects support ticket systems to ChatGPT for smart triage, routing, and even AI-generated replies in Zendesk.\n\nDaily Executive Summary Generator: Pulls in data from Notion, Google Sheets, and Jira, summarizes it using GPT-4, and delivers a concise morning report via email or Teams.\n\n𝐃𝐢𝐠𝐢𝐭𝐚𝐥 𝐓𝐫𝐚𝐧𝐬𝐟𝐨𝐫𝐦𝐚𝐭𝐢𝐨𝐧\nDriving automation using RPA tools such as Microsoft Power Automate, Automation Anywhere, and UiPath—including workflow automation, ChatBots, Virtual AI Agents, and seamless app integration.\n\nDocument Intelligence & OCR Automation : Using tools like AI Builder and UiPath Document Understanding, automated the extraction of data from PDFs, emails, invoices, and scanned documents—feeding it directly into line-of-business systems without manual intervention.\n\nAI-Driven ChatBots & Virtual Agents : Built intelligent conversational agents that integrate with CRMs, helpdesks, websites, and messaging platforms (Teams, WhatsApp, Slack). These bots leverage ChatGPT and Power Virtual Agents to handle customer queries, qualify leads, schedule appointments, and perform backend actions through APIs.\n\nProvide information that you retrieve from the documents (or verified expert knowledge). If something is not included in the dataset or not part of above information or is unclear, clearly state that you do not have sufficient information.\n\nStructure of response:\nConcise and to the point\nSpecific numbers and facts, when available\nClearly indicate which section of the document is the information comes from\n\nObjective:\nProvide users with reliable and quick insights from resumes without unnecessary details."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "785a25cd-8a70-4fd8-bc5b-9c31f8f6ae75",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        80,
+        208
+      ],
+      "id": "8a11003a-14c9-4ee6-9afb-e89a81529929",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "5GjqbfKW9YX2R414",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        224,
+        208
+      ],
+      "id": "06dadf6e-b346-4ea4-a04b-a898bb86df3c",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "description": "Returns data related to resume and everything important from resume."
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolVectorStore",
+      "typeVersion": 1.1,
+      "position": [
+        368,
+        208
+      ],
+      "id": "ab1e6f4c-8cb2-4fcd-8ffe-c7fc56888d0c",
+      "name": "Answer questions with a vector store"
+    },
+    {
+      "parameters": {
+        "pineconeIndex": {
+          "__rl": true,
+          "value": "n8nmyresume",
+          "mode": "list",
+          "cachedResultName": "n8nmyresume"
+        },
+        "options": {
+          "pineconeNamespace": "n8nresume"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
+      "typeVersion": 1.3,
+      "position": [
+        160,
+        368
+      ],
+      "id": "4b0116f4-6422-40a8-84a5-82318154cbba",
+      "name": "Pinecone Vector Store",
+      "credentials": {
+        "pineconeApi": {
+          "id": "Lv8H4EQKfsAVSpb3",
+          "name": "PineconeApi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -16,
+        400
+      ],
+      "id": "a843510c-2146-4db4-94de-940047d36008",
+      "name": "Embeddings OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "5GjqbfKW9YX2R414",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        576,
+        368
+      ],
+      "id": "a04101de-ab6f-46d0-bacf-935a9f25e5fb",
+      "name": "OpenAI Chat Model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "5GjqbfKW9YX2R414",
+          "name": "OpenAi account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Answer questions with a vector store": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pinecone Vector Store": {
+      "ai_vectorStore": [
+        [
+          {
+            "node": "Answer questions with a vector store",
+            "type": "ai_vectorStore",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Answer questions with a vector store",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "d50efbac-ce79-4a24-9e00-994d452de4e9",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "04fb6882a3e697d95708b07736c2c8ee26422651925068c52f8f555a786adf45"
+  },
+  "id": "oqkZqTHcR4B7HaC1",
+  "tags": []
+}
