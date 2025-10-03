@@ -1,3 +1,9 @@
+Vist my website to chat with me
+
+Chat here - https://www.leelakrishna.online/
+
+<img width="404" height="604" alt="image" src="https://github.com/user-attachments/assets/54dc83d6-801f-4161-94e2-3b5882988c13" />
+
 # RAG Bot Resume - AI Assistant
 
 An intelligent chatbot built with n8n that answers questions about Leela Krishna Sarepalli's professional experience using Retrieval-Augmented Generation (RAG) with vector embeddings.
@@ -5,6 +11,8 @@ An intelligent chatbot built with n8n that answers questions about Leela Krishna
 ## Overview
 
 This AI assistant, named "Leela", analyzes and answers questions about Leela Krishna Sarepalli's resume with high accuracy by querying a vector database containing multiple resume versions. The bot is built using n8n workflows and integrates OpenAI's GPT models with Pinecone vector storage.
+
+<img width="888" height="598" alt="image" src="https://github.com/user-attachments/assets/4612d4e9-d543-4936-8132-1854c72bb02a" />
 
 ## Features
 
@@ -145,14 +153,3 @@ This project is configured for personal/professional use. Modify as needed for y
 
 For questions about Leela Krishna Sarepalli's services or this AI assistant implementation, please reach out through the chat interface or visit the professional profiles mentioned in the resume.
 
----
-
-**Note**: This is a production workflow with public webhook access. Ensure proper security measures and API rate limiting are in place.
-
-Vist my website to chat with me
-
-Chat here - https://www.leelakrishna.online/
-
-<img width="404" height="604" alt="image" src="https://github.com/user-attachments/assets/54dc83d6-801f-4161-94e2-3b5882988c13" />
-
-<img width="888" height="598" alt="image" src="https://github.com/user-attachments/assets/4612d4e9-d543-4936-8132-1854c72bb02a" />
